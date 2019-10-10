@@ -8,3 +8,6 @@ body {
   align-items: center;
 }
 
+canvas {
+  position: absolute;
+}
