@@ -34,5 +34,13 @@ function startVideo() {
 }
 
 video.addEventListener('play', () => {
-  console.log('playing')
+  setInterval(async () => {
+    const detections = await faceapi.detectAllFaces( // gets all faces inside of webcam image
+      video,
+      new faceapi.TinyFaceDetectorOptions()
+    ).withFaceLandmarks()
+      .withFaceExpressions()  // will determine expression of face
+
+    console.log(detections)
+  }, 100)
 })
