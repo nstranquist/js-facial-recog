@@ -1,5 +1,13 @@
 const video = document.getElementById('video')
 
+// load models
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),  // a fast model for in-browser rendering
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'), // box around face, know where face is
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')  // read face expressions (happy, sad, etc)
+])
+  .then(startVideo)
 
 
 function startVideo() {
@@ -23,12 +31,8 @@ function startVideo() {
     }).then(stream => video.srcObject = stream)
       .catch(err => console.error(err));
   }
-
-  //navigator.getUserMedia = (
-  //  { video: {} },
-  //  stream => video.srcObject = stream,
-  //  err => console.error(err)
-  //)
 }
 
-startVideo()
+video.addEventListener('play', () => {
+  console.log('playing')
+})
